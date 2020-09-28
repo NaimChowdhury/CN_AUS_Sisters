@@ -27,7 +27,7 @@ library(ggmap)
 ## 2. File management
 ### Create variables for directories
 ```{r file_management, include=FALSE}
-project.dir <- "/home/naeem/development/internships/VSFS/sister_cities" #naeem
+project.dir <- "/home/naeem/development/internships/VSFS/CN_AUS_Sisters" #naeem
 output.dir <- file.path(project.dir, "output")
 data.dir <- file.path(project.dir, "data")
 setwd(project.dir)
