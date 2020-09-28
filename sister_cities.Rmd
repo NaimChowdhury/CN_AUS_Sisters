@@ -20,8 +20,7 @@ Load in needed libraries
 ```{r, include=FALSE}
 library(tidyverse)
 library(RColorBrewer)
-library(ggplot2)
-library(ggmap)
+library(plotly)
 ```
 
 ## 2. File management
@@ -32,5 +31,52 @@ output.dir <- file.path(project.dir, "output")
 data.dir <- file.path(project.dir, "data")
 setwd(project.dir)
 getwd()
+```
+
+## 3. Playground
+
+### Line Mapping
+```{r}
+### Data Read-in
+air <- read_csv('https://raw.githubusercontent.com/plotly/datasets/master/2011_february_us_airport_traffic.csv')
+flights <- read_csv('https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv')
+flights$id <- seq_len(nrow(flights))
+
+geo <- list(
+  scope = 'asia', #TODO 1 Find Scope Parameters
+  projection = list(type = 'azimuthal equal area'), 
+  showland = TRUE, 
+  landcolor = toRGB("gray95"), #TODO 2 Set Color
+  countrycolor = toRGB("gray80")
+)
+
+fig <- plot_geo(locationmode = 'country names', color = I("red"))
+
+
+# TODO 3 hoverinfo = city name
+# TODO 4 Set Color to be different from lines
+# Plots the dots
+fig <- fig %>% add_markers( 
+  data = air, x = ~long, y = ~lat, text = ~airport,
+  size = ~cnt, hoverinfo = "text", alpha = 0.5
+)
+
+
+#TODO 5 x = AUS_lon, x_end = CN_lon, y=AUS_lat, yend = CN_lat
+#TODO 6 hoverinfo = "comments"
+fig <- fig %>% add_segments(
+    data = group_by(flights, id),
+    x = ~start_lon, xend = ~end_lon,
+    y = ~start_lat, yend = ~end_lat,
+    alpha = 0.3, size = I(1), hoverinfo = "none"
+  )
+
+fig <- fig %>% layout(
+    title = 'VSFS Test Map for Sister Cities',
+    geo = geo, showlegend = FALSE, height=800
+  )
+
+fig
+
 ```
 
