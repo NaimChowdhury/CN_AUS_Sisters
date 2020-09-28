@@ -1,0 +1,36 @@
+---
+title: "Chinese Sister-Cities"
+author: "Naimul Chowdhury"
+date: "09/27/2020"
+output: html_notebook
+---
+
+##1. Setup
+### options
+Set up global options
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(tidy=TRUE)
+knitr::opts_chunk$set(tidy.opts=list(width.cutoff=70))
+knitr::opts_chunk$set(fig.height=4, fig.width=6)
+```
+
+### libraries
+Load in needed libraries 
+```{r, include=FALSE}
+library(tidyverse)
+library(RColorBrewer)
+library(ggplot2)
+library(ggmap)
+```
+
+## 2. File management
+### Create variables for directories
+```{r file_management, include=FALSE}
+project.dir <- "/home/naeem/development/internships/VSFS/sister_cities" #naeem
+output.dir <- file.path(project.dir, "output")
+data.dir <- file.path(project.dir, "data")
+setwd(project.dir)
+getwd()
+```
+
