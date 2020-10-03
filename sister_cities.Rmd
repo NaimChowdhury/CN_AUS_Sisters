@@ -43,7 +43,7 @@ flights <- read_csv('https://raw.githubusercontent.com/plotly/datasets/master/20
 flights$id <- seq_len(nrow(flights))
 
 geo <- list(
-  scope = 'asia', #TODO 1 Find Scope Parameters
+  scope = 'world', #TODO 1 Find Scope Parameters
   projection = list(type = 'azimuthal equal area'), 
   showland = TRUE, 
   landcolor = toRGB("gray95"), #TODO 2 Set Color
@@ -58,7 +58,7 @@ fig <- plot_geo(locationmode = 'country names', color = I("red"))
 # Plots the dots
 fig <- fig %>% add_markers( 
   data = air, x = ~long, y = ~lat, text = ~airport,
-  size = ~cnt, hoverinfo = "text", alpha = 0.5
+  size = ~cnt, hoverinfo = "text", alpha = 1
 )
 
 
@@ -73,8 +73,30 @@ fig <- fig %>% add_segments(
 
 fig <- fig %>% layout(
     title = 'VSFS Test Map for Sister Cities',
-    geo = geo, showlegend = FALSE, height=800
-  )
+    geo = list(
+      resolution = 100,
+      showland = TRUE,
+      showlakes = TRUE,
+      landcolor = toRGB("grey80"),
+      countrycolor = toRGB("grey80"),
+      lakecolor = toRGB("white"),
+      projection = list(type = "equirectangular"),
+      coastlinewidth = 2,
+      lataxis = list(
+        range = c(20, 60),
+        showgrid = TRUE,
+        tickmode = "linear",
+        dtick = 10
+        ),
+      lonaxis = list(
+        range = c(-100, 20),
+        showgrid = TRUE,
+        tickmode = "linear",
+        dtick = 20
+      )
+    )
+    , showlegend = FALSE, height=800
+)
 
 fig
 
