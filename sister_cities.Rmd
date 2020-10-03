@@ -32,8 +32,9 @@ data.dir <- file.path(project.dir, "data")
 setwd(project.dir)
 getwd()
 
-cities <- read.csv(file.path(data.dir, "all_cities.csv"))
-sisters <- read.csv(file.path(data.dir, "aus_cn.csv"))
+cities <- read_csv(file.path(data.dir, "all_cities.csv"))
+sisters <- read_csv(file.path(data.dir, "sisters.csv"))
+sisters <- sisters %>% select(`Australian City`, Aus_LAT, Aus_LNG, `Chinese City`, CN_LAT, CN_LNG)
 ```
 
 ## 3. Playground
@@ -41,9 +42,10 @@ sisters <- read.csv(file.path(data.dir, "aus_cn.csv"))
 ### Line Mapping
 ```{r}
 ### Data Read-in
-air <- read_csv('https://raw.githubusercontent.com/plotly/datasets/master/2011_february_us_airport_traffic.csv')
-flights <- read_csv('https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv')
-flights$id <- seq_len(nrow(flights))
+#air <- read_csv('https://raw.githubusercontent.com/plotly/datasets/master/2011_february_us_airport_traffic.csv')
+#flights <- read_csv('https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv')
+#flights$id <- seq_len(nrow(flights))
+sisters$id <- seq_len(nrow(sisters))
 
 geo <- list(
   scope = 'world', #TODO 1 Find Scope Parameters
@@ -60,17 +62,17 @@ fig <- plot_geo(locationmode = 'country names', color = I("red"))
 # TODO 4 Set Color to be different from lines
 # Plots the dots
 fig <- fig %>% add_markers( 
-  data = air, x = ~long, y = ~lat, text = ~airport,
-  size = ~cnt, hoverinfo = "text", alpha = 1
+  data = cities, x = ~lng, y = ~lat, text = ~city_name,
+  size = 1, hoverinfo = "city_name", alpha = 1
 )
 
 
 #TODO 5 x = AUS_lon, x_end = CN_lon, y=AUS_lat, yend = CN_lat
 #TODO 6 hoverinfo = "comments"
 fig <- fig %>% add_segments(
-    data = group_by(flights, id),
-    x = ~start_lon, xend = ~end_lon,
-    y = ~start_lat, yend = ~end_lat,
+    data = group_by(sisters, id),
+    x = ~Aus_LNG, xend = ~CN_LNG,
+    y = ~Aus_LAT, yend = ~CN_LAT,
     alpha = 0.3, size = I(1), hoverinfo = "none"
   )
 
