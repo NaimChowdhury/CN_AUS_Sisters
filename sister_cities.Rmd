@@ -31,6 +31,9 @@ output.dir <- file.path(project.dir, "output")
 data.dir <- file.path(project.dir, "data")
 setwd(project.dir)
 getwd()
+
+cities <- read.csv(file.path(data.dir, "all_cities.csv"))
+sisters <- read.csv(file.path(data.dir, "aus_cn.csv"))
 ```
 
 ## 3. Playground
@@ -83,19 +86,19 @@ fig <- fig %>% layout(
       projection = list(type = "equirectangular"),
       coastlinewidth = 2,
       lataxis = list(
-        range = c(20, 60),
+        range = c(-100, 100),
         showgrid = TRUE,
         tickmode = "linear",
         dtick = 10
         ),
       lonaxis = list(
-        range = c(-100, 20),
+        range = c(0, 100),
         showgrid = TRUE,
         tickmode = "linear",
         dtick = 20
       )
     )
-    , showlegend = FALSE, height=800
+    , showlegend = FALSE, height=500
 )
 
 fig
