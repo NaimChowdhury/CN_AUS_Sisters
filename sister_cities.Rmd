@@ -95,13 +95,13 @@ fig <- fig %>% layout(
       coastlinewidth = 2,
       lataxis = list(
         range = c(-50, 70),
-        showgrid = TRUE,
+        showgrid = FALSE,
         tickmode = "linear",
         dtick = 10
         ),
       lonaxis = list(
         range = c(40, 170),
-        showgrid = TRUE,
+        showgrid = FALSE,
         tickmode = "linear",
         dtick = 20
       )
