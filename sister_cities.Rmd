@@ -1,7 +1,7 @@
 ---
 title: "Chinese Sister-Cities"
-author: "Naimul Chowdhury"
-date: "09/27/2020"
+author: "Naimul Chowdhury, Ihechi Ezuruonye, Abi McGowan, Anmei Zeng"
+date: "10/04/2020"
 output:
   html_document:
     df_print: paged
@@ -79,7 +79,7 @@ fig <- fig %>% add_segments(
 fig <- fig %>% layout(
     title = list(text = "Australia-China Sister Cities", 
                  font = list(family = "Droid Sans", size = 32), 
-                 y = 1, showlegend = TRUE),
+                 y = 0.9, showlegend = TRUE),
     geo = list(
       resolution = 100,
       showland = TRUE,
