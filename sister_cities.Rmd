@@ -1,5 +1,5 @@
 ---
-title: "Chinese Sister-Cities"
+title: "Australia-China Sister Cities"
 author: "Naimul Chowdhury, Ihechi Ezuruonye, Abi McGowan, Anmei Zeng"
 date: "10/04/2020"
 output:
@@ -7,9 +7,8 @@ output:
     df_print: paged
 ---
 
-##1. Setup
-### options
-Set up global options
+
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(tidy=TRUE)
@@ -17,16 +16,14 @@ knitr::opts_chunk$set(tidy.opts=list(width.cutoff=70))
 knitr::opts_chunk$set(fig.height=4, fig.width=6)
 ```
 
-### libraries
-Load in needed libraries 
+
 ```{r, include=FALSE}
 library(tidyverse)
 library(RColorBrewer)
 library(plotly)
 ```
 
-## 2. File management
-### Create variables for directories
+
 ```{r file_management, include=FALSE}
 project.dir <- "/home/naeem/development/internships/VSFS/CN_AUS_Sisters" #naeem
 output.dir <- file.path(project.dir, "output")
@@ -39,19 +36,45 @@ sisters <- read_csv(file.path(data.dir, "sisters_no_gc.csv"))
 sisters <- sisters %>% select(`Australian City`, Aus_LAT, Aus_LNG, `Chinese City`, CN_LAT, CN_LNG)
 ```
 
-## 3. Playground
+## Data
+The data which produced this map was collected by confirming the current or historical existence of each relationship, and subsequently recording their latitudinal and longitudinal location. Current structure includes the following variables:
 
-### Line Mapping
-```{r}
+- Australian City
+- Australian (lat,lng)
+- Chinese City
+- Chinese (lat,lng)
+- Date of Initiation
+- Continuing Relation (boolean 0 or 1)
+- Significant Persons
+- Reason for Relationship (industry, etc)
+- Type of Relationship (Sister City, Strategic Partner, Friendship)
+- Commentary/Analysis
+
+## Completed
+- Produce a prototype map for presentation and discussion on Sunday, October 4th 8PM EST / Monday, October 5th, 11AM EST.
+
+## To-Do
+- Standardize city naming convention (City, Province)
+- Record commentary or analysis for each relationship.
+- Display commentary as a "hover-over" for lines connecting cities
+
+## Future Considerations
+- Produce polygonal data for China and Australia border to reduce informational clutter
+- Topographical land representation
+
+## Map Production
+
+### Code
+```{r, warning = FALSE, message = FALSE}
 # Add a unique id label to the relationships
 sisters$id <- seq_len(nrow(sisters))
 
 #Possibly play with scope to see if we can focus only on the region of interest
 geo <- list(
-  scope = 'asia', #TODO 1 Find Scope Parameters
+  scope = 'asia',
   projection = list(type = 'azimuthal equal area'), 
   showland = TRUE, 
-  landcolor = toRGB("gray95"), #TODO 2 Set Color
+  landcolor = toRGB("gray95"), 
   countrycolor = toRGB("gray80")
 )
 
