@@ -2,7 +2,9 @@
 title: "Chinese Sister-Cities"
 author: "Naimul Chowdhury"
 date: "09/27/2020"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
 
 ##1. Setup
@@ -41,12 +43,10 @@ sisters <- sisters %>% select(`Australian City`, Aus_LAT, Aus_LNG, `Chinese City
 
 ### Line Mapping
 ```{r}
-### Data Read-in
-#air <- read_csv('https://raw.githubusercontent.com/plotly/datasets/master/2011_february_us_airport_traffic.csv')
-#flights <- read_csv('https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv')
-#flights$id <- seq_len(nrow(flights))
+# Add a unique id label to the relationships
 sisters$id <- seq_len(nrow(sisters))
 
+#Possibly play with scope to see if we can focus only on the region of interest
 geo <- list(
   scope = 'world', #TODO 1 Find Scope Parameters
   projection = list(type = 'azimuthal equal area'), 
@@ -59,7 +59,6 @@ fig <- plot_geo(locationmode = 'country names', color = I("red"))
 
 
 # TODO 3 hoverinfo = city name
-# TODO 4 Set Color to be different from lines
 # Plots the dots
 fig <- fig %>% add_markers( 
   data = cities, x = ~lng, y = ~lat, text = ~city_name,
@@ -67,14 +66,15 @@ fig <- fig %>% add_markers(
 )
 
 
-#TODO 5 x = AUS_lon, x_end = CN_lon, y=AUS_lat, yend = CN_lat
+
 #TODO 6 hoverinfo = "comments"
 fig <- fig %>% add_segments(
     data = group_by(sisters, id),
     x = ~Aus_LNG, xend = ~CN_LNG,
     y = ~Aus_LAT, yend = ~CN_LAT,
-    alpha = 0.3, size = I(1), hoverinfo = "none"
+    alpha = 0.4, size = I(1), hoverinfo = "none"
   )
+
 
 fig <- fig %>% layout(
     title = 'VSFS Test Map for Sister Cities',
