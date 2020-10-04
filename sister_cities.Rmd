@@ -48,7 +48,7 @@ sisters$id <- seq_len(nrow(sisters))
 
 #Possibly play with scope to see if we can focus only on the region of interest
 geo <- list(
-  scope = 'world', #TODO 1 Find Scope Parameters
+  scope = 'asia', #TODO 1 Find Scope Parameters
   projection = list(type = 'azimuthal equal area'), 
   showland = TRUE, 
   landcolor = toRGB("gray95"), #TODO 2 Set Color
@@ -82,9 +82,12 @@ fig <- fig %>% layout(
       resolution = 100,
       showland = TRUE,
       showlakes = TRUE,
+      showocean = TRUE,
+      showcountries = TRUE,
       landcolor = toRGB("grey80"),
-      countrycolor = toRGB("grey80"),
-      lakecolor = toRGB("white"),
+      countrycolor = "#444",
+      lakecolor = toRGB("#0077BE"),
+      oceancolor = toRGB("#3399FF"),
       projection = list(type = "equirectangular"),
       coastlinewidth = 2,
       lataxis = list(
