@@ -34,8 +34,8 @@ data.dir <- file.path(project.dir, "data")
 setwd(project.dir)
 getwd()
 
-cities <- read_csv(file.path(data.dir, "all_cities_no_tw.csv"))
-sisters <- read_csv(file.path(data.dir, "sisters_no_tw.csv"))
+cities <- read_csv(file.path(data.dir, "all_cities_no_gc.csv"))
+sisters <- read_csv(file.path(data.dir, "sisters_no_gc.csv"))
 sisters <- sisters %>% select(`Australian City`, Aus_LAT, Aus_LNG, `Chinese City`, CN_LAT, CN_LNG)
 ```
 
@@ -75,9 +75,11 @@ fig <- fig %>% add_segments(
     alpha = 0.4, size = I(1), hoverinfo = "none"
   )
 
-
+# Controls most features of the map
 fig <- fig %>% layout(
-    title = list(text = "Australia-China Sister Cities", font = list(family = "Times New Roman", size = 32), y = 1),
+    title = list(text = "Australia-China Sister Cities", 
+                 font = list(family = "Droid Sans", size = 32), 
+                 y = 1, showlegend = TRUE),
     geo = list(
       resolution = 100,
       showland = TRUE,
@@ -86,6 +88,7 @@ fig <- fig %>% layout(
       showcountries = TRUE,
       landcolor = toRGB("grey80"),
       countrycolor = "#444",
+      bgcolor = "#fff",
       lakecolor = toRGB("#0077BE"),
       oceancolor = toRGB("#3399FF"),
       projection = list(type = "equirectangular"),
