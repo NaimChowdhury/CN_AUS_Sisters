@@ -34,8 +34,8 @@ data.dir <- file.path(project.dir, "data")
 setwd(project.dir)
 getwd()
 
-cities <- read_csv(file.path(data.dir, "all_cities.csv"))
-sisters <- read_csv(file.path(data.dir, "sisters.csv"))
+cities <- read_csv(file.path(data.dir, "all_cities_no_tw.csv"))
+sisters <- read_csv(file.path(data.dir, "sisters_no_tw.csv"))
 sisters <- sisters %>% select(`Australian City`, Aus_LAT, Aus_LNG, `Chinese City`, CN_LAT, CN_LNG)
 ```
 
@@ -77,7 +77,7 @@ fig <- fig %>% add_segments(
 
 
 fig <- fig %>% layout(
-    title = 'VSFS Test Map for Sister Cities',
+    title = list(text = "Australia-China Sister Cities", font = list(family = "Times New Roman", size = 32), y = 1),
     geo = list(
       resolution = 100,
       showland = TRUE,
@@ -88,22 +88,23 @@ fig <- fig %>% layout(
       projection = list(type = "equirectangular"),
       coastlinewidth = 2,
       lataxis = list(
-        range = c(-100, 100),
+        range = c(-50, 70),
         showgrid = TRUE,
         tickmode = "linear",
         dtick = 10
         ),
       lonaxis = list(
-        range = c(0, 100),
+        range = c(40, 170),
         showgrid = TRUE,
         tickmode = "linear",
         dtick = 20
       )
     )
-    , showlegend = FALSE, height=500
+    , showlegend = FALSE, height = 1024, width = 768
 )
 
 fig
 
 ```
+
 
